@@ -34,7 +34,7 @@ vote.receive_fields=function(player,fields)
 			meta:set_string("infotext", meta:get_string("question").." (owned by "..meta:get_string("owner")..")");
 		end
 	elseif fields.vote then
-		if string.find(meta:get_string("log"), string.gsub(player:get_player_name()..", ", "%-", "%%%-")) then
+		if string.find(meta:get_string("log"), string.gsub(player:get_player_name()..", ", "%-", "%%%-")) then 
 			return
 		else
 			if fields.vote==meta:get_string("option1") then meta:set_int("r1", meta:get_int("r1")+1) 
@@ -83,20 +83,20 @@ vote.showform=function(pos,player)
 		gui=""
 		.."size[8,3]"
 		.."label[0,0.2;"..meta:get_string("question").."]"
-		.."label[0,0.7;"..meta:get_string("option1").." ("..meta:get_int("r1").." votes, "..vote.percent(meta:get_int("r1"),total).."%)]"
-		.."label[0,1.2;"..meta:get_string("option2").." ("..meta:get_int("r2").." votes, "..vote.percent(meta:get_int("r2"),total).."%)]"
-		.."label[0,1.7;"..meta:get_string("option3").." ("..meta:get_int("r3").." votes, "..vote.percent(meta:get_int("r3"),total).."%)]"
-		.."label[0,2.2;"..meta:get_string("option4").." ("..meta:get_int("r4").." votes, "..vote.percent(meta:get_int("r4"),total).."%)]"
-		.."label[0,2.7;"..meta:get_string("option5").." ("..meta:get_int("r5").." votes, "..vote.percent(meta:get_int("r5"),total).."%)]"
-
-		.."button_exit[5.6,2;2,1;exit;Close]"
+		local p = 1
+		for i = 1, 5, 1 do
+			if not (meta:get_string("option"..i) == "") then gui=gui.."label[0,"..(0.5*p+.2)..";"..meta:get_string("option"..i).." ("..meta:get_int("r"..i).." votes, "..vote.percent(meta:get_int("r"..i),total).."%)]" p=p+1 end
+		end
+		gui=gui.."button_exit[5.6,2;2,1;exit;Close]"
 	elseif ready then
 		gui=""
 		.."size[8,3]"
 		.."label[0,0.2;"..meta:get_string("question").."]"
-		.."dropdown[0,1;8, 0.8;vote;"..meta:get_string("option1")..","..meta:get_string("option2")..","..meta:get_string("option3")
-		..","..meta:get_string("option4")..","..meta:get_string("option5")..";".."0]"
-		.."button_exit[5.6,2;2,1;exit;Vote]"
+		.."dropdown[0,1;8, 0.8;vote;"
+		for i = 1, 5, 1 do
+			if not (meta:get_string("option"..i) == "") then gui=gui..meta:get_string("option"..i) if i < 5 then gui=gui.."," else gui=gui..";".."0]" end end
+		end
+		gui=gui.."button_exit[5.6,2;2,1;exit;Vote]"
 	else
 		gui=""
 		.."size[8,3]"
