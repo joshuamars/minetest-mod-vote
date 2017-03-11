@@ -94,9 +94,10 @@ vote.showform=function(pos,player)
 		.."label[0,0.2;"..meta:get_string("question").."]"
 		.."dropdown[0,1;8, 0.8;vote;"
 		for i = 1, 5, 1 do
-			if not (meta:get_string("option"..i) == "") then gui=gui..meta:get_string("option"..i) if i < 5 then gui=gui.."," else gui=gui..";".."0]" end end
+			if not (meta:get_string("option"..i) == "") then gui=gui..meta:get_string("option"..i)..","  end
 		end
-		gui=gui.."button_exit[5.6,2;2,1;exit;Vote]"
+		gui = gui:sub(1, -2) -- Remove last comma
+		gui=gui..";0]button_exit[5.6,2;2,1;exit;Vote]"
 	else
 		gui=""
 		.."size[8,3]"
