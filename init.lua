@@ -23,12 +23,12 @@ vote.receive_fields=function(player,fields)
 	
 	if fields.save or fields.submit then
 		-- SAVE DATA CODE GOES HERE ONCE I CAN FIGURE IT OUT
-		meta:set_string("question", fields.question)
-		meta:set_string("option1", fields.option1)
-		meta:set_string("option2", fields.option2)
-		meta:set_string("option3", fields.option3)
-		meta:set_string("option4", fields.option4)
-		meta:set_string("option5", fields.option5)
+		meta:set_string("question", minetest.formspec_escape(fields.question))
+		meta:set_string("option1", minetest.formspec_escape(fields.option1))
+		meta:set_string("option2", minetest.formspec_escape(fields.option2))
+		meta:set_string("option3", minetest.formspec_escape(fields.option3))
+		meta:set_string("option4", minetest.formspec_escape(fields.option4))
+		meta:set_string("option5", minetest.formspec_escape(fields.option5))
 		if fields.submit then
 			meta:set_int("ready", 1);
 			meta:set_string("infotext", meta:get_string("question").." (owned by "..meta:get_string("owner")..")");
